@@ -183,32 +183,25 @@ doSwap:
         #   y--
         # }
 
-	li $t0, 0
-	li $t1, 8
-	li $t2, 4
-	j loop
+	la $t0, myArray
+	lw $t1, ($t0)
+	lw $t2, 32($t0)
+	sw $t2, ($t0)
+	sw $t1, 32($t0)
 
-loop:
-	beq $t0, $t2, exit_loop
-	la $t3, myArray
+	lw $t1, 4($t0)
+	lw $t2, 28($t0)
+	sw $t2, 4($t0)
+	sw $t1, 28($t0)
 
-	sll $t4, $t0, 2
-	addu $t5, $t3, $t4
+	lw $t1, 8($t0)
+	lw $t2, 24($t0)
+	sw $t2, 8($t0)
+	sw $t1, 24($t0)
 
-	sll $t6, $t1, 2
-	addu $t7, $t3, $t6
-	
-	lw $t4, 0($t5)
-	lw $t6, 0($t7)
-
-	sw $t6, 0($t5)
-	sw $t4, 0($t7)
-	
-	addi $t0, $t0, 1
-	addi $t0, $t0, -1
-
-	j loop
-
-exit_loop:	
+	lw $t1, 12($t0)
+	lw $t2, 20($t0)
+	sw $t2, 12($t0)
+	sw $t1, 20($t0)
         # do not remove this last line
         jr $ra
