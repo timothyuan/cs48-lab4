@@ -160,8 +160,8 @@ main_failed:
         syscall
         
 main_exit:      
-	# TODO: Write code to properly exit a SPIM simulation
-
+	li $v0, 10
+	syscall
         
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 
@@ -183,7 +183,32 @@ doSwap:
         #   y--
         # }
 
-        # TODO: fill in the code
+	li $t0, 0
+	li $t1, 8
+	li $t2, 4
+	j loop
 
+loop:
+	beq $t0, $t2, exit_loop
+	la $t3, myArray
+
+	sll $t4, $t0, 2
+	addu $t5, $t3, $t4
+
+	sll $t6, $t1, 2
+	addu $t7, $t3, $t6
+	
+	lw $t4, 0($t5)
+	lw $t6, 0($t7)
+
+	sw $t6, 0($t5)
+	sw $t4, 0($t7)
+	
+	addi $t0, $t0, 1
+	addi $t0, $t0, -1
+
+	j loop
+
+exit_loop:	
         # do not remove this last line
         jr $ra
